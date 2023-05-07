@@ -30,8 +30,5 @@ for index, col in enumerate(df_graph.columns[:-1]):
 # Hinzufügen von MOAAS Subplot
 fig.add_trace(go.Scatter(x=df_graph.index[:200], y=df_graph['MOAAS'][:200], mode='lines+markers', name='MOAAS'), row=subplot_count, col=1)
 
-# Aktualisieren der Größe und Darstellung des Plots
-fig.update_layout(height=200*subplot_count, width=int(st.get_canvas_width()*0.9), showlegend=True)
-
 # Anzeigen des Plots in der Streamlit-Anwendung
-st.plotly_chart(fig)
+st.plotly_chart(fig,use_container_width=True)
