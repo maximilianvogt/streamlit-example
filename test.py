@@ -17,15 +17,38 @@ def create_plot(df_graph, selected_columns):
     for col in selected_columns:
         if col in grouped_columns:
             if any(gr_col in selected_columns for gr_col in grouped_columns):
-                fig.add_trace(go.Scatter(x=df_graph.index[:200], y=df_graph[col][:200], mode='lines', name=col), row=row_idx, col=1)
+                fig.add_trace(go.Scatter(x=df_graph.index, y=df_graph[col], mode='lines', name=col), row=row_idx, col=1)
                 continue
         else:
-            fig.add_trace(go.Scatter(x=df_graph.index[:200], y=df_graph[col][:200], mode='lines', name=col), row=row_idx, col=1)
+            fig.add_trace(go.Scatter(x=df_graph.index, y=df_graph[col], mode='lines', name=col), row=row_idx, col=1)
             row_idx += 1
 
-    # Hinzufügen von MOAAS Subplot
     if 'MOAAS' in df_graph.columns:
-        fig.add_trace(go.Scatter(x=df_graph.index[:200], y=df_graph['MOAAS'][:200], mode='lines+markers', name='MOAAS'), row=subplot_count, col=1)
+        moaas_x = df_graph.index
+        moaas_y = df_graph['MOAAS']
+
+        # Ermitteln der Bereiche, in denen MOAAS kleiner als 3 ist
+        moaas_low_areas = [(x, y) for x, y in zip(moaas_x, moaas_y) if y < 3]
+
+        # Zeichnen der gelben Bereiche
+        if moaas_low_areas:
+            for x, y in moaas_low_areas:
+                fig.add_shape(
+                    type='rect',
+                    xref='x',
+                    yref='y2',
+                    x0=x - 0.5,
+                    x1=x + 0.5,
+                    y0=0,
+                    y1=max(moaas_y),
+                    fillcolor='yellow',
+                    opacity=0.5,
+                    layer='below',
+                    line_width=0
+                )
+
+        # Zeichnen der MOAAS-Werte
+        fig.add_trace(go.Scatter(x=moaas_x, y=moaas_y, mode='lines+markers', name='MOAAS', yaxis='y2'), row=subplot_count, col=1)
 
     # Aktualisieren der Größe und Darstellung des Plots
     fig.update_layout(height=150*subplot_count, showlegend=True)
