@@ -8,7 +8,7 @@ def create_plot(df_graph, selected_columns):
     subplot_count = len(selected_columns)
 
     # Erstellen der Subplots
-    fig = make_subplots(rows=subplot_count, cols=1, shared_xaxes=True, vertical_spacing=0.05)
+    fig = make_subplots(rows=subplot_count, cols=1, shared_xaxes=True, vertical_spacing=0.01)
 
     # Hinzufügen der Subplots
     for index, col in enumerate(selected_columns):
@@ -18,7 +18,7 @@ def create_plot(df_graph, selected_columns):
     if 'MOAAS' in df_graph.columns:
         fig.add_trace(go.Scatter(x=df_graph.index[:200], y=df_graph['MOAAS'][:200], mode='lines+markers', name='MOAAS'), row=subplot_count, col=1)
     
-    fig.update_layout(height=200*subplot_count, showlegend=True)
+    fig.update_layout(height=150*subplot_count, showlegend=True)
     
     # Anzeigen des Plots in der Streamlit-Anwendung
     st.plotly_chart(fig,use_container_width=True)
