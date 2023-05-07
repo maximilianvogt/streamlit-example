@@ -20,7 +20,7 @@ def create_plot(df_graph, selected_columns):
 
 
     # Anzeigen des Plots in der Streamlit-Anwendung
-    st.plotly_chart(fig,use_container_width=True))
+    st.plotly_chart(fig,use_container_width=True)
 
 # Streamlit Titel
 st.title('Plotly Subplots Beispiel')
