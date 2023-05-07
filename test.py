@@ -62,10 +62,3 @@ if uploaded_file is not None:
 else:
     st.warning("Bitte laden Sie eine CSV-Datei hoch.")
 
-    # Erstellen und anzeigen des Plots
-    if len(selected_columns) > 0:
-        create_plot(df_graph, selected_columns)
-    else:
-        st.warning("Bitte wählen Sie mindestens eine Spalte aus.")
-else:
-    st.warning("Bitte laden Sie eine CSV-Datei hoch.")
