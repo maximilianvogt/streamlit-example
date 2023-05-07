@@ -23,12 +23,12 @@ def create_plot(df_graph, selected_columns):
             fig.add_trace(go.Scatter(x=df_graph.index, y=df_graph[col], mode='lines', name=col), row=row_idx, col=1)
             row_idx += 1
 
-    if 'MOAAS' in df_graph.columns:
+    if 'V6' in df_graph.columns:
         moaas_x = df_graph.index
-        moaas_y = df_graph['MOAAS']
+        moaas_y = df_graph['V6']
 
         # Ermitteln der Bereiche, in denen MOAAS kleiner als 3 ist
-        moaas_low_areas = [(x, y) for x, y in zip(moaas_x, moaas_y) if y < 3]
+        moaas_low_areas = [(x, y) for x, y in zip(moaas_x, moaas_y) if y < 0]
 
         # Zeichnen der gelben Bereiche
         if moaas_low_areas:
@@ -48,7 +48,7 @@ def create_plot(df_graph, selected_columns):
                 )
 
         # Zeichnen der MOAAS-Werte
-        fig.add_trace(go.Scatter(x=moaas_x, y=moaas_y, mode='lines+markers', name='MOAAS', yaxis='y2'), row=subplot_count, col=1)
+        fig.add_trace(go.Scatter(x=moaas_x, y=moaas_y, mode='lines+markers', name='V6', yaxis='y2'), row=subplot_count, col=1)
 
     # Aktualisieren der Größe und Darstellung des Plots
     fig.update_layout(height=150*subplot_count, showlegend=True)
