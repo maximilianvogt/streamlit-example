@@ -46,7 +46,9 @@ if uploaded_file is not None:
 
     # Spaltenauswahl
     st.sidebar.title("Spaltenauswahl")
-    available_columns = df_graph.columns.tolist()
+    # Filtern der numerischen Spalten
+    available_columns = [col for col in df_graph.columns if pd.api.types.is_numeric_dtype(df_graph[col])]
+
     selected_columns = st.sidebar.multiselect("Wählen Sie die Spalten aus, die geplottet werden sollen:", available_columns, default=available_columns)
 
     # Schieberegler zur Auswahl des geplotteten Bereichs
